@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Namma Metro FAQ Chatbot</title>
+    <style>
+        body {
+            background-image: url("https://images.unsplash.com/photo-1687158266872-fd2773fa76c6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            max-width: 760px;
+            margin: 30px auto;
+            padding: 20px;
+            color: #111;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            text-shadow: 0 2px 6px rgba(255,255,255,0.8);
+        }
+
+        #chatbox {
+            height: 620px;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 16px 16px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            background: rgba(255,255,255,0.78);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            backdrop-filter: blur(8px);
+        }
+
+        #chatbox::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chatbox::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+
+        .faq-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 12px 0 14px;
+        }
+
+        .faq-btn {
+            width: 100%;
+            text-align: left;
+            padding: 12px 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #f7fbff, #eef4ff);
+            border: 1px solid #d7e6ff;
+        }
+
+        @media (max-width: 600px) {
+            .faq-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        input {
+            width: 85%;
+            padding: 15px 18px;
+            color: #111;
+            font-style: italic;
+            border: 1px solid #ccc;
+            border-radius: 50px;
+            background-color: #f8fbff;
+            font-weight: 600;
+            font-size: 15px;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            border-color: #2f80ed;
+            box-shadow: 0 0 0 3px rgba(47,128,237,0.15);
+            background-color: #ffffff;
+        }
+
+        button {
+            padding: 12px 16px;
+            color: #111;
+            background: linear-gradient(135deg, #ffffff, #eef4ff);
+            border: 1px solid #d8e4ff;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+            background: linear-gradient(135deg, #fdfdfd, #dfefff);
+        }
+
+        .user { padding:10px 15px;
+            color:#111;
+            font-weight:600;
+            font-size:16px;
+            font-family:Arial,sans-serif;
+            font-style:italic;
+            background:linear-gradient(135deg, rgba(91,116,250,.28), rgba(111,76,255,.22));
+            border-radius:14px;
+            max-width:70%;
+            word-wrap:break-word;
+            border:1px solid rgba(70,90,220,.35);
+
+        }
+
+        .bot{
+            padding:10px 15px;
+            color:#062b14;
+            font-weight:600;
+            font-size:16px;
+            font-family:Arial,sans-serif;
+            font-style:italic;
+            background:linear-gradient(135deg, rgba(38,219,131,.28), rgba(18,248,121,.18));
+            border-radius:14px;
+            max-width:70%;
+            word-wrap:break-word;
+            border:1px solid rgba(18,140,72,.3);
+}
+
+        .message{
+            display: flex;
+            width: 100%;
+            margin: 10px 0;
+}
+
+.user-row{
+    justify-content: flex-end;
+}
+
+.bot-row{
+    justify-content: flex-start;
+}
+
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: rgba(255,255,255,0.82);
+            border-radius: 50px;
+            margin-top: 20px;
+            padding: 10px 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            backdrop-filter: blur(8px);
+
+        }
+
+        footer a {
+            color: #0b5fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="display: block; font-family:serif; text-align: center; color: #000000; font-size: 30px; font-weight: bold;">Namma Metro FAQ Chatbot</h2>
+<div id="chatbox">
+    <h1 style="text-align: center; color: #000000; font-size: 15px; font-weight: bold;">
+         🤖 Hi there! I'm your Namma Metro FAQ Chatbot. Ask me anything about Namma Metro, and I'll do my best to assist you!<hr>
+    </h1>
+
+    <h5>Example Frequently Asked Questions</h5>
+
+    <div class="faq-buttons">
+        <button type="button" class="faq-btn" onclick="showAnswer('Namma Metro is a rapid transit system serving the city of Bengaluru, Karnataka, India.')">What is Namma Metro?</button>
+        <button type="button" class="faq-btn" onclick="showAnswer('During an emergency, stay calm, follow station staff instructions, and use the nearest emergency exit or help point.')">What should I do during an emergency?</button>
+        <button type="button" class="faq-btn" onclick="showAnswer('Namma Metro currently operates several metro lines connecting key parts of Bengaluru and its surrounding areas.')">How many metro lines are currently operational?</button>
+        <button type="button" class="faq-btn" onclick="showAnswer('Yes, Namma Metro services are generally available on weekends, though the timetable may vary by line and time.')">Is the metro available on weekends?</button>
+    </div>
+
+</div>
+
+<input type="text" id="message" placeholder="💭 Ask a question...">
+<button type="button" id="sendBtn">Send</button>
+<script>
+function showAnswer(answer) {
+    let chatbox = document.getElementById("chatbox");
+    chatbox.innerHTML += `
+<div class="message bot-row">
+    <div class="bot">🤖 ${answer}</div>
+</div>
+`;
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+function sendMessage() {
+    let input = document.getElementById("message");
+    let message = input.value.trim();
+
+    if (message === "") return;
+
+    fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: message
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        let chatbox = document.getElementById("chatbox");
+
+        chatbox.innerHTML += `
+<div class="message user-row">
+    <div class="user">🙋‍♂️ ${message}</div>
+</div>
+
+<div class="message bot-row">
+    <div class="bot">🤖 ${data.reply}</div>
+</div>
+`;
+        input.value = "";
+        chatbox.scrollTop = chatbox.scrollHeight;
+    });
+}
+
+// Send when button is clicked
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
+
+// Send when Enter is pressed
+document.getElementById("message").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+</script>
+<footer style="background-color: #ffffffc4; border-radius: 50px;margin-top: 20px;">
+    <h1 style="text-align: center; color: #070303; font-size: 16px;">For More Information: <a href="https://www.bmrc.co.in" target="_blank" style="color: #0e0a0a; text-decoration: underline;">Visit the Official Website</a></h1>
+        <p style="text-align: center; color: #0f0707; font-size: 14px;">&copy; 2026 Namma Metro. All rights reserved.</p>
+
+</footer>
+</body>
+</html>
